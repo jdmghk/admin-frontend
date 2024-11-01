@@ -16,8 +16,8 @@ export default async function Layout({
   }
 
   return (
-    <section className='grid grid-cols-2 h-screen'>
-      <div className='relative overflow-clip'>
+    <section className='grid lg:grid-cols-2 h-screen'>
+      <div className='hidden lg:block relative overflow-clip'>
         <Image
           alt='Towering multi-level building'
           src={authBg}

@@ -22,22 +22,19 @@ export default async function Page() {
     return null;
   }
 
-  // fetch event
   const res = await api(eventDataSchema, {
     url: `/dashboard/${session?.user?.events[0]}/sales`,
     method: "get",
   });
 
-  console.log(res);
-
   return (
-    <div className='flex flex-1 flex-col gap-4 p-4 pt-0'>
-      <div className='aspect-[16/2] rounded-xl bg-white grid grid-cols-4'>
-        <div className='flex items-center justify-center space-x-5'>
-          <div className='size-16 xl:size-24 grid place-content-center rounded-full text-white bg-[#4D44B5]'>
-            <Ticket strokeWidth={1.5} className='size-8' />
+    <div className='flex flex-1 flex-col gap-4 lg:p-4 pt-0'>
+      <div className='aspect-[16/2] rounded-xl bg-white grid grid-cols-2 md:grid-cols-4 gap-3 p-4'>
+        <div className='flex flex-col lg:flex-row items-center justify-center gap-y-2 gap-x-5'>
+          <div className='p-3 lg:size-12 xl:size-16 2xl:size-24 grid place-content-center rounded-full text-white bg-[#4D44B5]'>
+            <Ticket strokeWidth={1.5} className='size-6 xl:size-8' />
           </div>
-          <div>
+          <div className='text-center lg:text-left'>
             <p className='text-lg'>No. of tickets</p>
             <p className='text-2xl font-semibold'>
               {res?.data?.ticketSales?.reduce((acc, ticket) => {
@@ -46,11 +43,11 @@ export default async function Page() {
             </p>
           </div>
         </div>
-        <div className='flex items-center justify-center space-x-5'>
-          <div className='size-16 xl:size-24 grid place-content-center rounded-full text-white bg-[#FB7D5B]'>
-            <User2 strokeWidth={1.5} className='size-8' />
+        <div className='flex flex-col lg:flex-row items-center justify-center gap-y-2 gap-x-5'>
+          <div className='p-3 lg:size-12 xl:size-16 2xl:size-24 grid place-content-center rounded-full text-white bg-[#FB7D5B]'>
+            <User2 strokeWidth={1.5} className='size-6 xl:size-8' />
           </div>
-          <div>
+          <div className='text-center lg:text-left'>
             <p className='text-lg'>Tickets sold</p>
             <p className='text-2xl font-semibold'>
               {res?.data?.ticketSales?.reduce((acc, ticket) => {
@@ -59,11 +56,11 @@ export default async function Page() {
             </p>
           </div>
         </div>
-        <div className='flex items-center justify-center space-x-5'>
-          <div className='size-16 xl:size-24 grid place-content-center rounded-full text-white bg-[#FCC43E]'>
-            <Calendar1Icon strokeWidth={1.5} className='size-8' />
+        <div className='flex flex-col lg:flex-row items-center justify-center gap-y-2 gap-x-5'>
+          <div className='p-3 lg:size-12 xl:size-16 2xl:size-24 grid place-content-center rounded-full text-white bg-[#FCC43E]'>
+            <Calendar1Icon strokeWidth={1.5} className='size-6 xl:size-8' />
           </div>
-          <div>
+          <div className='text-center lg:text-left'>
             <p className='text-lg'>Checked in</p>
             <p className='text-2xl font-semibold'>
               {res?.data?.ticketSales?.reduce((acc) => {
@@ -72,25 +69,25 @@ export default async function Page() {
             </p>
           </div>
         </div>
-        <div className='flex items-center justify-center space-x-5'>
-          <div className='size-16 xl:size-24 grid place-content-center rounded-full text-white bg-[#303972]'>
-            <HandCoins strokeWidth={1.5} className='size-8' />
+        <div className='flex flex-col lg:flex-row items-center justify-center gap-y-2 gap-x-5'>
+          <div className='p-3 lg:size-12 xl:size-16 2xl:size-24 grid place-content-center rounded-full text-white bg-[#303972]'>
+            <HandCoins strokeWidth={1.5} className='size-6 xl:size-8' />
           </div>
-          <div>
+          <div className='text-center lg:text-left'>
             <p className='text-lg'>Total revenue</p>
             <p className='text-2xl font-semibold'>
-              {res?.data?.totalRevenue?.toLocaleString()}
+              ₦{res?.data?.totalRevenue?.toLocaleString()}
             </p>
           </div>
         </div>
       </div>
 
-      <div className='min-h-[100vh] flex-1 rounded-xl bg-white md:min-h-min p-8 space-y-6'>
+      {/* <div className='min-h-[100vh] flex-1 rounded-xl bg-white md:min-h-min p-8 space-y-6'>
         <p className='text-3xl font-medium opacity-65'>Recent Transactions</p>
         <Table>
           <TableCaption className='py-6'>
             <Button asChild className='rounded-full p-4 px-8 h-auto'>
-              <Link href='/'>See more</Link>
+              <Link href='/dashboard/transactions'>See more</Link>
             </Button>
           </TableCaption>
           <TableHeader>
@@ -120,7 +117,7 @@ export default async function Page() {
             ))}
           </TableBody>
         </Table>
-      </div>
+      </div> */}
     </div>
   );
 }

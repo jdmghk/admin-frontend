@@ -2,9 +2,7 @@
 
 import * as React from "react";
 import {
-  AudioWaveform,
   Banknote,
-  Command,
   Frame,
   GalleryVerticalEnd,
   Home,
@@ -16,7 +14,6 @@ import {
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
-// import { NavProjects } from "@/components/nav-projects";
 import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
 import {
@@ -57,10 +54,14 @@ const data = {
     },
     {
       title: "Tickets",
-      url: "/dashboard",
+      url: "/dashboard/tickets",
       icon: Ticket,
       isActive: true,
       items: [
+        {
+          title: "Purchases",
+          url: "/dashboard/tickets/purchases",
+        },
         {
           title: "Types",
           url: "/dashboard/tickets",
