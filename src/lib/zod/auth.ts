@@ -18,12 +18,13 @@ export const verifyLoginResponseSchema = object({
     first_name: string(),
     last_name: string(),
     role: string(),
-    events: array(
-      object({
-        id: string(),
-        name: string(),
-      })
-    ),
+    // events: array(
+    //   object({
+    //     id: string(),
+    //     name: string(),
+    //   })
+    // ),
+    events: array(string()),
     createdAt: string(),
     updatedAt: string(),
     __v: number(),

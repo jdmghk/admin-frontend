@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { z, ZodError } from "zod";
+import { ZodError } from "zod";
 import { api } from "@/lib/api";
 import { verifyLoginResponseSchema, verifyLoginSchema } from "@/lib/zod";
 
@@ -11,7 +11,8 @@ declare module "next-auth" {
     email?: string | null;
     image?: string | null;
     access_token?: string | null;
-    events?: null | Array<{ id: string; name: string }>;
+    // events?: null | Array<{ id: string; name: string }>;
+    events?: null | Array<string>;
   }
 
   interface Session {
@@ -28,7 +29,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           // logic to verify if the user exists
           const data = await verifyLoginSchema.parseAsync(credentials);
 
-          const res = await api(z.any(), {
+          const res = await api(verifyLoginResponseSchema, {
             url: "/login/verify",
             method: "post",
             data,

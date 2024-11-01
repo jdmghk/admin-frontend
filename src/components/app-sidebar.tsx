@@ -24,6 +24,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { Session } from "next-auth";
+import Image from "next/image";
 
 // This is sample data.
 const data = {
@@ -131,7 +132,17 @@ export function AppSidebar({
   return (
     <Sidebar collapsible='icon' {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <div className='p-2'>
+          <Image
+            src='/tickets-by-All-In-icon-logo-white.png'
+            alt=''
+            width={80}
+            height={80}
+            className='object-contain object-center size-10'
+          />
+        </div>
+
+        {/* <TeamSwitcher teams={data.teams} /> */}
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />

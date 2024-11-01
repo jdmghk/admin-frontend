@@ -49,7 +49,7 @@ export default async function Page() {
             </CardHeader>
             <CardContent className='flex-grow'>
               <p className='text-sm text-muted-foreground mb-4'>
-                {ticket.type}
+                Benefits: {ticket.benefits}
               </p>
               <div className='space-y-1'>
                 <p className='text-sm font-medium'>
