@@ -2,14 +2,14 @@
 
 import * as React from "react";
 import {
-  Banknote,
+  // Banknote,
   Frame,
   GalleryVerticalEnd,
   Home,
   Map,
   PieChart,
   Settings2,
-  ScanBarcodeIcon,
+  // ScanBarcodeIcon,
   Ticket,
 } from "lucide-react";
 
@@ -69,32 +69,32 @@ const data = {
         },
       ],
     },
-    {
-      title: "Transactions",
-      url: "/dashboard/transactions",
-      icon: Banknote,
-      items: [
-        {
-          title: "Overview",
-          url: "/dashboard/transactions",
-        },
-      ],
-    },
-    {
-      title: "Checkin",
-      url: "#",
-      icon: ScanBarcodeIcon,
-      items: [
-        {
-          title: "QR Scan",
-          url: "#",
-        },
-        {
-          title: "Credentails",
-          url: "#",
-        },
-      ],
-    },
+    // {
+    //   title: "Transactions",
+    //   url: "/dashboard/transactions",
+    //   icon: Banknote,
+    //   items: [
+    //     {
+    //       title: "Overview",
+    //       url: "/dashboard/transactions",
+    //     },
+    //   ],
+    // },
+    // {
+    //   title: "Checkin",
+    //   url: "#",
+    //   icon: ScanBarcodeIcon,
+    //   items: [
+    //     {
+    //       title: "QR Scan",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Credentails",
+    //       url: "#",
+    //     },
+    //   ],
+    // },
     {
       title: "Settings",
       url: "#",
