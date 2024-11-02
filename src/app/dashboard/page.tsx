@@ -99,8 +99,8 @@ export default async function Page() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {res?.data?.recentTransactions?.map((invoice) => (
-              <TableRow key={invoice.trxRef}>
+            {res?.data?.recentTransactions?.map((invoice, index) => (
+              <TableRow key={index}>
                 <TableCell className='font-medium py-4'>
                   {invoice.trxRef}
                 </TableCell>

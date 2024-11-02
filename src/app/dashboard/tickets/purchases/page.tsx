@@ -39,8 +39,8 @@ export default async function Page() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {res?.data?.tickets?.map((ticket) => (
-            <TableRow key={ticket.id}>
+          {res?.data?.tickets?.map((ticket, index) => (
+            <TableRow key={index}>
               <TableCell className='font-medium py-4'>{ticket.id}</TableCell>
               <TableCell className='py-4'>{ticket.user.name}</TableCell>
               <TableCell className='py-4'>{ticket.user.email}</TableCell>

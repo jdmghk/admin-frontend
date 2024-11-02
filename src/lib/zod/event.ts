@@ -6,7 +6,7 @@ const EventSchema = z.object({
   duration: z.number(),
   time: z.string(),
   location: z.string(),
-  location_url: z.string().url(),
+  location_url: z.string(),
   event_type: z.string(),
   category: z.string(),
   total_tickets: z.number(),
