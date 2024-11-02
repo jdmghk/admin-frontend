@@ -11,12 +11,12 @@ const TicketSchema = z.object({
   }),
   ticket_info: z.object({
     trxRef: z.string(),
-    payment_status: z.enum(["success", "pending", "failed"]),
+    payment_status: z.enum(["success", "pending", "failed", "Free Event"]),
     amount: z.number(),
     purchase_date: z.string().datetime(),
     ticket_types: z.array(z.string()),
   }),
-  questions: z.array(z.string()),
+  questions: z.array(z.any()),
 });
 
 const PaginationSchema = z.object({
