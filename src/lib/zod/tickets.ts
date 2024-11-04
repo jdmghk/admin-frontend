@@ -10,7 +10,7 @@ export const TicketSchema = z.object({
     gender: z.enum(["male", "female"]),
   }),
   ticket_info: z.object({
-    trxRef: z.string(),
+    trxRef: z.string().nullable(),
     payment_status: z.enum(["success", "pending", "failed", "Free Event"]),
     amount: z.number(),
     purchase_date: z.string().datetime(),

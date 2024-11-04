@@ -32,7 +32,7 @@ export const TransactionSchema = z.object({
   email: z.string().email(),
   gender: z.string(),
   phone_number: z.number(),
-  trxRef: z.string(),
+  trxRef: z.string().nullable(),
   payment_status: z.string(),
   amount: z.number(),
   date: z.string(),
