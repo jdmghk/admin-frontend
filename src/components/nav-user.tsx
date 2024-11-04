@@ -1,10 +1,10 @@
 "use client";
 
 import {
-  BadgeCheck,
-  Bell,
+  // BadgeCheck,
+  // Bell,
   ChevronsUpDown,
-  CreditCard,
+  // CreditCard,
   LogOut,
   // Sparkles,
 } from "lucide-react";
@@ -13,7 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
+  // DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -91,7 +91,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator /> */}
-            <DropdownMenuGroup>
+            {/* <DropdownMenuGroup>
               <DropdownMenuItem className='gap-2'>
                 <BadgeCheck strokeWidth={1.5} className='size-5' />
                 Account
@@ -104,7 +104,7 @@ export function NavUser({
                 <Bell strokeWidth={1.5} className='size-5' />
                 Notifications
               </DropdownMenuItem>
-            </DropdownMenuGroup>
+            </DropdownMenuGroup> */}
             <DropdownMenuSeparator />
             <DropdownMenuItem className='gap-2' onClick={() => signOut()}>
               <LogOut strokeWidth={1.5} className='size-5' />

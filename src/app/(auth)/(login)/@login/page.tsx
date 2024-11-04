@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useFormState } from "react-dom";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -40,10 +41,7 @@ export default function Page() {
 
   const [message, setMessage] = React.useState<string | undefined>(undefined);
 
-  const [state, formAction, isPending] = React.useActionState(
-    client_login,
-    undefined
-  );
+  const [state, formAction, isPending] = useFormState(client_login, undefined);
 
   // async function onSubmit(values: z.infer<typeof formSchema>) {
   //   try {

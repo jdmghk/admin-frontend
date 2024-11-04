@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const TicketSchema = z.object({
+export const TicketSchema = z.object({
   id: z.string(),
   user: z.object({
     id: z.string(),

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import {
-  // Banknote,
+  Banknote,
   Frame,
   GalleryVerticalEnd,
   Home,
@@ -69,17 +69,17 @@ const data = {
         },
       ],
     },
-    // {
-    //   title: "Transactions",
-    //   url: "/dashboard/transactions",
-    //   icon: Banknote,
-    //   items: [
-    //     {
-    //       title: "Overview",
-    //       url: "/dashboard/transactions",
-    //     },
-    //   ],
-    // },
+    {
+      title: "Transactions",
+      url: "/dashboard/transactions",
+      icon: Banknote,
+      items: [
+        {
+          title: "Overview",
+          url: "/dashboard/transactions",
+        },
+      ],
+    },
     // {
     //   title: "Checkin",
     //   url: "#",
