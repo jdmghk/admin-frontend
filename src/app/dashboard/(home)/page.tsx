@@ -115,7 +115,7 @@ export default async function Page() {
               <div className='flex justify-between items-start'>
                 <div className='space-y-2'>
                   <CardTitle>{res?.data?.event?.title}</CardTitle>
-                  <CardDescription className='text-sm text-gray-300'>
+                  <CardDescription className='text-sm text-gray-200 line-clamp-2 overflow-ellipsis'>
                     {res?.data?.event?.description ?? "No description provided"}
                   </CardDescription>
                 </div>
