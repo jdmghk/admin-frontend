@@ -171,7 +171,9 @@ const columns: ColumnDef<z.infer<typeof TicketSchema>>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() =>
-                navigator.clipboard.writeText(payment.ticket_info.trxRef)
+                navigator.clipboard.writeText(
+                  payment?.ticket_info?.trxRef ?? ""
+                )
               }
             >
               Copy payment ID
