@@ -154,7 +154,9 @@ const columns: ColumnDef<z.infer<typeof TransactionSchema>>[] = [
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.trxRef)}
+              onClick={() =>
+                navigator.clipboard.writeText(payment?.trxRef ?? "")
+              }
             >
               Copy payment ID
             </DropdownMenuItem>
