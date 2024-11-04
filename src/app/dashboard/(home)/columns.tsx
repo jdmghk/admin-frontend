@@ -35,7 +35,7 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "date",
     header: "Date",
     cell: ({ row }) => {
-      const date = parseFloat(row.getValue("date"));
+      const date: string | number = row.getValue("date");
 
       return (
         <div>
