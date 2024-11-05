@@ -50,6 +50,7 @@ import { TransactionSchema } from "@/lib/zod/event";
 import dayjs from "dayjs";
 import { getTransactions } from "@/actions/transactions";
 import { Card, CardContent } from "@/components/ui/card";
+import { Download } from "./download";
 
 const columns: ColumnDef<z.infer<typeof TransactionSchema>>[] = [
   {
@@ -224,7 +225,7 @@ function TransactionTable({
   return (
     <div className='w-full flex-1 flex flex-col gap-4'>
       <Card className='shadow-none border-none'>
-        <CardContent className='flex flex-col md:flex-row items-center gap-2 p-4 lg:p-6'>
+        <CardContent className='flex flex-col md:flex-row items-center gap-2 p-4 lg:p-6 w-full justify-between'>
           <Input
             placeholder='Filter emails...'
             value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
@@ -233,32 +234,35 @@ function TransactionTable({
             }
             className='max-w-sm'
           />
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant='outline' className='ml-auto'>
-                Columns <ChevronDownIcon className='ml-2 h-4 w-4' />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align='end'>
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className='capitalize'
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className='flex items-center justify-end gap-3'>
+            <Download />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant='outline'>
+                  Columns <ChevronDownIcon className='ml-2 h-4 w-4' />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align='end'>
+                {table
+                  .getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => {
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        className='capitalize'
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(!!value)
+                        }
+                      >
+                        {column.id}
+                      </DropdownMenuCheckboxItem>
+                    );
+                  })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </CardContent>
       </Card>
 
