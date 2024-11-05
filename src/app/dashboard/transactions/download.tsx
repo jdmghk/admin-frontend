@@ -2,25 +2,21 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Download as D } from "lucide-react";
 import { z } from "zod";
-import { TransactionSchema } from "@/lib/zod/event";
+import { _TransactionSchema } from "@/lib/zod/download";
 import useCsvDownload from "@/hooks/use-download-csv";
 import { getTransactionDownload } from "@/actions/transactions";
 import { toast } from "sonner";
 
-type Trx = z.infer<typeof TransactionSchema>;
-
-interface Transaction extends Trx {
-  uniqueID: string;
-}
-
 export function Download() {
   const [pending, setPending] = React.useState(false);
   const [data, setData] = React.useState<{
-    transactions: Transaction[];
+    transactions: z.infer<typeof _TransactionSchema>[];
     eventTitle: string;
   }>({ transactions: [], eventTitle: "" });
 
-  const { downloadCsv, isDownloading } = useCsvDownload<Transaction>({
+  const { downloadCsv, isDownloading } = useCsvDownload<
+    z.infer<typeof _TransactionSchema>
+  >({
     data: data.transactions,
     filename: data.eventTitle,
     headers: [

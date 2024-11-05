@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const TransactionSchema = z.object({
+export const _TransactionSchema = z.object({
   buyerName: z.string(),
   email: z.string().email(),
   gender: z.string(),
@@ -14,6 +14,6 @@ const TransactionSchema = z.object({
 
 export const downloadTransactionsSchema = z.object({
   eventTitle: z.string(),
-  transactions: z.array(TransactionSchema),
+  transactions: z.array(_TransactionSchema),
   totalItems: z.number(),
 });
