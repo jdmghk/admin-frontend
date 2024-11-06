@@ -10,7 +10,7 @@ export const _TransactionSchema = z.object({
   amount: z.number(),
   date: z.string(),
   uniqueID: z.string(),
-  ticket_type: z.array(z.string()).transform((array) => array.join(", ")),
+  ticket_type: z.string(),
 });
 
 export const downloadTransactionsSchema = z.object({
