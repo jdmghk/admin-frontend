@@ -14,7 +14,13 @@ export const TicketSchema = z.object({
     payment_status: z.enum(["success", "pending", "failed", "Free Event"]),
     amount: z.number(),
     purchase_date: z.string().datetime(),
-    ticket_types: z.array(z.string()),
+    ticket_types: z.array(
+      z.object({
+        type: z.string(),
+        uniqueID: z.string(),
+        qrCode: z.string(),
+      })
+    ),
   }),
   questions: z.array(z.any()),
 });

@@ -3,6 +3,7 @@
 import { ticketsDataSchema } from "@/lib/zod/tickets";
 import { auth } from "../../../auth";
 import { api } from "@/lib/api";
+import { downloadTicketsSchema } from "@/lib/zod/download";
 
 interface PaginationState {
   pageIndex: number;
@@ -22,11 +23,24 @@ export async function getTickets(pagination: PaginationState) {
     method: "get",
   });
 
-  console.log(res);
-
   return {
     rows: res?.data?.tickets ?? [],
     pageCount: res.data?.pagination?.totalPages ?? 0,
     rowCount: (res?.data?.tickets ?? [])?.length ?? 0,
   };
+}
+
+export async function getTicketsDownload() {
+  const session = await auth();
+
+  if (!session || !session.user || !session?.user?.events) {
+    return null;
+  }
+
+  const res = await api(downloadTicketsSchema, {
+    url: `/dashboard/${session?.user?.events[0]}/downloadtickets`,
+    method: "get",
+  });
+
+  return res;
 }

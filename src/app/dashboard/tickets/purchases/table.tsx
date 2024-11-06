@@ -50,6 +50,15 @@ import { TicketSchema } from "@/lib/zod/tickets";
 import dayjs from "dayjs";
 import { getTickets } from "@/actions/tickets";
 import { Card, CardContent } from "@/components/ui/card";
+import { Download } from "./download";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { User, Ticket, HelpCircle } from "lucide-react";
 
 const columns: ColumnDef<z.infer<typeof TicketSchema>>[] = [
   {
@@ -158,31 +167,128 @@ const columns: ColumnDef<z.infer<typeof TicketSchema>>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const payment = row.original;
+      const amount = parseFloat(payment?.ticket_info.amount?.toString() ?? "0");
+      const formatted = new Intl.NumberFormat("en-NG", {
+        style: "currency",
+        currency: "NGN",
+      }).format(amount);
+
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [detailsOpen, setDetailsOpen] = React.useState(false);
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant='ghost' className='h-8 w-8 p-0'>
-              <span className='sr-only'>Open menu</span>
-              <DotsHorizontalIcon className='h-4 w-4' />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align='end'>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(
-                  payment?.ticket_info?.trxRef ?? ""
-                )
-              }
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant='ghost' className='h-8 w-8 p-0'>
+                <span className='sr-only'>Open menu</span>
+                <DotsHorizontalIcon className='h-4 w-4' />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align='end'>
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() =>
+                  navigator.clipboard.writeText(
+                    payment?.ticket_info?.trxRef ?? ""
+                  )
+                }
+              >
+                Copy payment ID
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => setDetailsOpen(true)}>
+                View customer
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
+            <DialogContent className='sm:max-w-[425px] lg:max-w-lg'>
+              <DialogHeader>
+                <DialogTitle>Ticket Holder Information</DialogTitle>
+              </DialogHeader>
+              <ScrollArea className='max-h-[80vh] pr-4 [&_strong]:font-medium'>
+                <Card className='mb-4'>
+                  <CardContent className='pt-6 p-4'>
+                    <h3 className='text-lg font-semibold flex items-center mb-2'>
+                      <User className='mr-2' /> Personal Information
+                    </h3>
+                    <p>
+                      <strong>Name:</strong> {payment?.user.name}
+                    </p>
+                    <p>
+                      <strong>Email:</strong> {payment?.user.email}
+                    </p>
+                    <p>
+                      <strong>Phone:</strong> {payment?.user.phone}
+                    </p>
+                    <p>
+                      <strong>Gender:</strong> {payment?.user.gender}
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className='mb-4'>
+                  <CardContent className='pt-6 p-4'>
+                    <h3 className='text-lg font-semibold flex items-center mb-2'>
+                      <Ticket className='mr-2' /> Ticket Information
+                    </h3>
+                    <p>
+                      <strong>Transaction Reference:</strong>{" "}
+                      {payment?.ticket_info.trxRef ?? "N/A"}
+                    </p>
+                    <p>
+                      <strong>Payment Status:</strong>{" "}
+                      {payment?.ticket_info.payment_status}
+                    </p>
+                    <p>
+                      <strong>Amount:</strong>
+                      {formatted}
+                    </p>
+                    <p>
+                      <strong>Purchase Date:</strong>{" "}
+                      {new Date(
+                        payment?.ticket_info.purchase_date
+                      ).toLocaleString()}
+                    </p>
+                    <p>
+                      <strong>Ticket Type:</strong>{" "}
+                      {payment?.ticket_info.ticket_types[0].type}
+                    </p>
+                    <p>
+                      <strong>Unique ID:</strong>{" "}
+                      {payment?.ticket_info.ticket_types[0].uniqueID}
+                    </p>
+                    <div className='mt-4'>
+                      <p className='font-semibold mb-2'>QR Code:</p>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={payment?.ticket_info.ticket_types[0].qrCode ?? ""}
+                        alt='Ticket QR Code'
+                        className='w-40 h-40 mx-auto'
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardContent className='pt-6 p-4'>
+                    <h3 className='text-lg font-semibold flex items-center mb-2'>
+                      <HelpCircle className='mr-2' /> Questions and Answers
+                    </h3>
+                    {payment?.questions.map((q, index) => (
+                      <div key={index} className='mb-4'>
+                        <p className='font-medium'>{q.title}</p>
+                        <p className='text-muted-foreground'>{q.answer}</p>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </ScrollArea>
+            </DialogContent>
+          </Dialog>
+        </>
       );
     },
   },
@@ -242,7 +348,7 @@ function TransactionTable({
   return (
     <div className='flex-1 flex flex-col gap-4'>
       <Card className='shadow-none border-none'>
-        <CardContent className='flex flex-col md:flex-row items-center gap-2 p-4 lg:p-6'>
+        <CardContent className='flex flex-col md:flex-row items-center gap-2 p-4 lg:p-6 w-full justify-between'>
           <Input
             placeholder='Filter emails...'
             value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
@@ -251,32 +357,36 @@ function TransactionTable({
             }
             className='max-w-sm'
           />
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant='outline' className='ml-auto'>
-                Columns <ChevronDownIcon className='ml-2 h-4 w-4' />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align='end'>
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className='capitalize'
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className='flex items-center justify-end gap-3'>
+            <Download />
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant='outline' className='ml-auto'>
+                  Columns <ChevronDownIcon className='ml-2 h-4 w-4' />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align='end'>
+                {table
+                  .getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => {
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        className='capitalize'
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(!!value)
+                        }
+                      >
+                        {column.id}
+                      </DropdownMenuCheckboxItem>
+                    );
+                  })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </CardContent>
       </Card>
 

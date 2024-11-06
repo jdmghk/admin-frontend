@@ -2,33 +2,32 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Download as D } from "lucide-react";
 import { z } from "zod";
-import { _TransactionSchema } from "@/lib/zod/download";
+import { _Ticket } from "@/lib/zod/download";
 import useCsvDownload from "@/hooks/use-download-csv";
-import { getTransactionDownload } from "@/actions/transactions";
+import { getTicketsDownload } from "@/actions/tickets";
 import { toast } from "sonner";
 
 export function Download() {
   const [pending, setPending] = React.useState(false);
   const [data, setData] = React.useState<{
-    transactions: z.infer<typeof _TransactionSchema>[];
+    ticket_holders: z.infer<typeof _Ticket>[];
     eventTitle: string;
-  }>({ transactions: [], eventTitle: "" });
+  }>({ ticket_holders: [], eventTitle: "" });
 
   const { downloadCsv, isDownloading } = useCsvDownload<
-    z.infer<typeof _TransactionSchema>
+    z.infer<typeof _Ticket>
   >({
-    data: data.transactions,
+    data: data.ticket_holders,
     filename: data.eventTitle,
     headers: [
       "uniqueID",
-      "buyerName",
+      "name",
       "email",
-      "phone_number",
-      "payment_status",
       "gender",
-      "date",
+      "ticket_class",
+      "payment_status",
       "trxRef",
-      "ticket_type",
+      "date",
     ],
     onSuccess: () => toast.success("CSV download successful!"),
   });
@@ -38,9 +37,9 @@ export function Download() {
       onClick={async function () {
         try {
           setPending(true);
-          const res = await getTransactionDownload();
+          const res = await getTicketsDownload();
 
-          if (res?.data?.eventTitle && res.data.transactions) {
+          if (res?.data?.eventTitle && res.data.ticket_holders) {
             setData(res?.data);
             downloadCsv();
           } else {
