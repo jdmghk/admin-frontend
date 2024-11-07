@@ -73,7 +73,11 @@ export default function QRCodeScanner() {
                 {pending && <Loader className='animate-spin' />}
                 <span>Check in</span>
               </Button>
-              <Button variant='destructive' className=''>
+              <Button
+                onClick={() => setScannedDecodedText(null)}
+                variant='destructive'
+                className=''
+              >
                 Clear
               </Button>
             </div>
