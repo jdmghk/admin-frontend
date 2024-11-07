@@ -9,7 +9,7 @@ import {
   Map,
   PieChart,
   Settings2,
-  // ScanBarcodeIcon,
+  LogIn,
   Ticket,
 } from "lucide-react";
 
@@ -80,21 +80,21 @@ const data = {
         },
       ],
     },
-    // {
-    //   title: "Checkin",
-    //   url: "#",
-    //   icon: ScanBarcodeIcon,
-    //   items: [
-    //     {
-    //       title: "QR Scan",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Credentails",
-    //       url: "#",
-    //     },
-    //   ],
-    // },
+    {
+      title: "Checkin",
+      url: "/dashboard/checkins",
+      icon: LogIn,
+      items: [
+        {
+          title: "QR Scan",
+          url: "/dashboard/checkins/scan",
+        },
+        {
+          title: "Search",
+          url: "/dashboard/checkins",
+        },
+      ],
+    },
     {
       title: "Settings",
       url: "#",
