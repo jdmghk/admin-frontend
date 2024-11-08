@@ -52,7 +52,9 @@ import { getTransactions } from "@/actions/transactions";
 import { Card, CardContent } from "@/components/ui/card";
 import { Download } from "./download";
 
-const columns: ColumnDef<z.infer<typeof TransactionSchema>>[] = [
+type Payment = z.infer<typeof TransactionSchema>;
+
+const columns: ColumnDef<Payment>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -136,6 +138,19 @@ const columns: ColumnDef<z.infer<typeof TransactionSchema>>[] = [
       }).format(amount);
 
       return <div className='font-medium'>{formatted}</div>;
+    },
+  },
+  {
+    accessorKey: "ticketTypes",
+    header: "Ticket types",
+    cell: ({ row }) => {
+      const ticketTypes: Payment["ticketTypes"] = row.getValue("ticketTypes");
+
+      return (
+        <div className='text-sm'>
+          {ticketTypes.map((ticketType) => ticketType.type).join(", ")}
+        </div>
+      );
     },
   },
   {

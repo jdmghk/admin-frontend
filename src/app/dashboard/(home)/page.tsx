@@ -31,8 +31,6 @@ export default async function Page() {
     method: "get",
   });
 
-  console.log(res?.data?.recentTransactions);
-
   const monthly_res = await api(
     z.array(z.object({ month: z.string(), qty: z.number() })),
     {

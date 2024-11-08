@@ -23,7 +23,7 @@ const TicketSaleSchema = z.object({
   sold: z.number(),
   remaining: z.number().nullable(),
   revenue: z.number(),
-  benefits: z.string().optional(),
+  benefits: z.string().nullable().optional(),
   sales_percentage: z.number(),
 });
 
@@ -36,6 +36,12 @@ export const TransactionSchema = z.object({
   payment_status: z.string(),
   amount: z.number(),
   date: z.string(),
+  ticketTypes: z.array(
+    z.object({
+      type: z.string(),
+      quantity: z.number(),
+    })
+  ),
 });
 
 const PaginationSchema = z.object({

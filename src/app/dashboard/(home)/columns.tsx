@@ -2,17 +2,12 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import dayjs from "dayjs";
+import { TransactionSchema } from "@/lib/zod/event";
+import { z } from "zod";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
-  buyerName: string;
-  amount: number;
-  payment_status: string;
-  email: string;
-  phone_number: number;
-  date: string;
-};
+export type Payment = z.infer<typeof TransactionSchema>;
 
 export const columns: ColumnDef<Payment>[] = [
   {
@@ -61,6 +56,19 @@ export const columns: ColumnDef<Payment>[] = [
       }).format(amount);
 
       return <div className='font-medium'>{formatted}</div>;
+    },
+  },
+  {
+    accessorKey: "ticketTypes",
+    header: "Ticket types",
+    cell: ({ row }) => {
+      const ticketTypes: Payment["ticketTypes"] = row.getValue("ticketTypes");
+
+      return (
+        <div className='text-sm'>
+          {ticketTypes.map((ticketType) => ticketType.type).join(", ")}
+        </div>
+      );
     },
   },
 ];
