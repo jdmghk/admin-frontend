@@ -26,10 +26,18 @@ import { toast } from "sonner";
 import { getOtp } from "@/actions/auth";
 import { client_login } from "@/actions/auth/login";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import { createFormData } from "@/lib/create-form-data";
+import { useCountDown } from "@/hooks/use-countdown";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export default function Page() {
+  const [ref] = useAutoAnimate();
   const [step, setStep] = React.useState<"otp" | "verify">("otp");
   const [emailValid, seEmailValid] = React.useState(false);
+  const [isPending, setIsPending] = React.useState(false);
+  const [timeLeft, { start, format, reset, pause, resume }] = useCountDown(
+    60 * 1000 * 10
+  );
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -38,26 +46,16 @@ export default function Page() {
       otp: "",
     },
   });
+  const email = form.watch("email");
 
   const [message, setMessage] = React.useState<string | undefined>(undefined);
 
-  const [state, formAction, isPending] = useFormState(client_login, undefined);
-
-  // async function onSubmit(values: z.infer<typeof formSchema>) {
-  //   try {
-  //     setMessage(undefined);
-  //     formAction(values);
-  //   } catch (e) {
-  //     console.error(e);
-  //     setMessage("An unexpected errror occured!");
-  //   }
-  // }
+  const [state, formAction] = useFormState(client_login, undefined);
 
   React.useEffect(() => {
+    setIsPending(false);
     setMessage(state?.message);
   }, [state]);
-
-  const email = form.watch("email");
 
   React.useEffect(() => {
     if (email) {
@@ -67,14 +65,28 @@ export default function Page() {
     }
   }, [email, form]);
 
+  React.useEffect(() => {
+    if (timeLeft <= 0 && step === "verify") {
+      pause();
+      reset();
+      setStep("otp");
+      form.resetField("otp");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeLeft]);
+
   const otpPromise = () =>
     new Promise(async (resolve, reject) => {
+      pause();
       const res = await getOtp(email);
 
       setStep("verify");
       if (res?.status === true) {
+        reset();
+        start();
         resolve(res);
       } else {
+        resume();
         reject(res);
       }
     });
@@ -91,10 +103,24 @@ export default function Page() {
     });
   }
 
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    await setIsPending(true);
+
+    try {
+      const formData = createFormData(values);
+
+      setMessage(undefined);
+      formAction(formData);
+    } catch (e) {
+      console.error(e);
+      setMessage("An unexpected errror occured!");
+    }
+  }
+
   return (
     <div className='min-h-96 space-y-14'>
       <Form {...form}>
-        <form action={formAction} className='space-y-8'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
           <div className='w-full max-w-[358px] mx-auto space-y-4'>
             {message && (
               <p className='text-sm font-medium text-destructive'>{message}</p>
@@ -151,10 +177,12 @@ export default function Page() {
                 )}
               />
             )}
-            {/* YWvTGh */}
           </div>
 
-          <div className='w-full max-w-sm mx-auto text-center space-y-3'>
+          <div
+            ref={ref}
+            className='w-full max-w-sm mx-auto text-center space-y-3'
+          >
             {step === "verify" && (
               <Button
                 disabled={form.formState.isSubmitting || isPending}
@@ -162,12 +190,12 @@ export default function Page() {
               >
                 <span
                   className='data-[active=true]:opacity-0'
-                  data-active={form.formState.isSubmitting}
+                  data-active={form.formState.isSubmitting || isPending}
                 >
                   Login
                 </span>
 
-                {form.formState.isSubmitting && (
+                {(form.formState.isSubmitting || isPending) && (
                   <div
                     role='status'
                     className='absolute w-full h-full grid place-content-center'
@@ -194,15 +222,37 @@ export default function Page() {
               </Button>
             )}
 
-            <Button
-              type='button'
-              disabled={!emailValid}
-              onClick={otpClicked}
-              className='py-4 h-auto rounded-full font-semibold w-full'
-              variant={step === "otp" ? undefined : "outline"}
-            >
-              {step === "otp" ? "Send OTP" : "Resend"}
-            </Button>
+            {step === "otp" && (
+              <Button
+                type='button'
+                disabled={!emailValid}
+                onClick={otpClicked}
+                className='py-4 h-auto rounded-full font-semibold w-full'
+              >
+                Send OTP
+              </Button>
+            )}
+
+            {step === "verify" ? (
+              timeLeft >= 1 ? (
+                <div
+                  key='resend-countdown'
+                  className='text-center mt-3 text-sm text-gray-500'
+                >
+                  <p>Resend in {format}</p>
+                </div>
+              ) : (
+                <Button
+                  type='button'
+                  disabled={!emailValid}
+                  onClick={otpClicked}
+                  className='py-4 h-auto rounded-full font-semibold w-full'
+                  variant='outline'
+                >
+                  Resend
+                </Button>
+              )
+            ) : null}
           </div>
         </form>
       </Form>

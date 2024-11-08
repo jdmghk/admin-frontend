@@ -50,10 +50,12 @@ export default async function Layout({
           {children}
         </div>
 
-        <div className='text-center max-w-96 mx-auto'>
-          <p className='text-[#9C9AA5] [&_a]:text-[#26203B]'>
-            By signing up to create an account I accept Company’s{" "}
-            <Link href='#'>Terms of use & Privacy Policy</Link>.
+        <div className='text-center max-w-xl mx-auto'>
+          <p className='text-[#9C9AA5] [&_a]:text-[#26203B] text-sm'>
+            By creating an account or using this service, you consent to the
+            Company’s <Link href='#'>Terms of Use</Link> and{" "}
+            <Link href='#'>Privacy Policy</Link>, and confirm that you have read
+            and agree to them.
           </p>
         </div>
       </div>
