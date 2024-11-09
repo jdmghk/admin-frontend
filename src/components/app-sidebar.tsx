@@ -3,11 +3,8 @@
 import * as React from "react";
 import {
   Banknote,
-  Frame,
   GalleryVerticalEnd,
   Home,
-  Map,
-  PieChart,
   Settings2,
   LogIn,
   Ticket,
@@ -52,6 +49,7 @@ const data = {
           url: "/dashboard",
         },
       ],
+      restricted: ["admin"],
     },
     {
       title: "Tickets",
@@ -68,6 +66,7 @@ const data = {
           url: "/dashboard/tickets",
         },
       ],
+      restricted: ["admin"],
     },
     {
       title: "Transactions",
@@ -79,6 +78,7 @@ const data = {
           url: "/dashboard/transactions",
         },
       ],
+      restricted: ["admin"],
     },
     {
       title: "Checkin",
@@ -94,6 +94,7 @@ const data = {
           url: "/dashboard/checkins",
         },
       ],
+      restricted: ["admin", "agent"],
     },
     {
       title: "Settings",
@@ -105,23 +106,7 @@ const data = {
           url: "mailto:tickets@lifewithallin.com",
         },
       ],
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
+      restricted: ["admin", "agent"],
     },
   ],
 };
@@ -145,7 +130,7 @@ export function AppSidebar({
         {/* <TeamSwitcher teams={data.teams} /> */}
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain role={props.session.user.role ?? ""} items={data.navMain} />
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>

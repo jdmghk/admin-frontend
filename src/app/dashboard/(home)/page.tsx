@@ -18,12 +18,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { Edit } from "lucide-react";
 import { formatEventDate, getEventTimeRange } from "@/lib/utils";
+import { redirect, RedirectType } from "next/navigation";
 
 export default async function Page() {
   const session = await auth();
 
   if (!session || !session.user || !session?.user?.events) {
     return null;
+  }
+
+  if (session.user?.role === "agent") {
+    redirect("/dashboard/checkins", RedirectType.replace);
   }
 
   const res = await api(eventDataSchema, {

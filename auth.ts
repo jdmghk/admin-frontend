@@ -10,6 +10,7 @@ declare module "next-auth" {
     name?: string | null;
     email?: string | null;
     image?: string | null;
+    role?: string | null;
     access_token?: string | null;
     // events?: null | Array<{ id: string; name: string }>;
     events?: null | Array<string>;
@@ -47,6 +48,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             image: null,
             events: res.data.user.events,
             access_token: res.data.token,
+            role: res.data.user.role ?? null,
           };
         } catch (e) {
           console.error(e);

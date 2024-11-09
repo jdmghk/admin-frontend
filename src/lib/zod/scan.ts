@@ -3,12 +3,9 @@ import { z } from "zod";
 const EventInfoSchema = z.object({
   id: z.string(),
   ticket_type: z.string(),
-  price: z.number(),
-  name: z.string(),
-  email: z.string().email(),
-  check_in: z.boolean(),
   uniqueID: z.string(),
   qrCode: z.string(), // assuming qrCode is a base64 string
+  check_in: z.boolean(),
 });
 
 export const scanTicketSchema = z.object({

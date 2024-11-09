@@ -5,7 +5,7 @@ import { auth } from "../../../auth";
 import { api } from "@/lib/api";
 import { downloadTicketsSchema } from "@/lib/zod/download";
 import { scanTicketSchema } from "@/lib/zod/scan";
-
+import { searchSchema } from "@/lib/zod/search";
 interface PaginationState {
   pageIndex: number;
   pageSize: number;
@@ -54,11 +54,27 @@ export async function getTicketsScan(id: string) {
   }
 
   const res = await api(scanTicketSchema, {
-    url: `/ticket/scan/${id}`,
+    url: `/ticket/scan?uniqueID=${id}&eventId=${session?.user?.events[0]}`,
     method: "get",
   });
 
-  console.log(res);
+  // http://localhost:5000/api/ticket/checkin?eventId=671a86c3481e26e9f4b737fc&search=tom
+  // http://localhost:5000/api/ticket/scan?uniqueID=9en1h7wf
+
+  return res;
+}
+
+export async function getTicketsSearch(search: string) {
+  const session = await auth();
+
+  if (!session || !session.user || !session?.user?.events) {
+    return null;
+  }
+
+  const res = await api(searchSchema, {
+    url: `/ticket/checkin?search=${search}&eventId=${session?.user?.events[0]}`,
+    method: "get",
+  });
 
   return res;
 }
