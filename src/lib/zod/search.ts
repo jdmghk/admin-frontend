@@ -14,7 +14,7 @@ const eventInfoSchema = z.object({
   ticket_type: z.string(),
   uniqueID: z.string(),
   qrCode: z.string(), // Assuming base64 QR code as a string
-  check_in: z.boolean(),
+  check_in: z.boolean().optional(),
 });
 
 const eventSchema = z.object({
