@@ -23,7 +23,7 @@ const eventSchema = z.object({
   _id: z.string(),
   user: userSchema,
   event_info: z.array(eventInfoSchema),
-  payment_status: z.enum(["Free Event", "Paid Event", "success"]), // Enum for known payment statuses
+  payment_status: z.string(), // Enum for known payment statuses
   trxRef: z.string().nullable(), // trxRef is nullable
   total_cost: z.number().nonnegative(),
 });
