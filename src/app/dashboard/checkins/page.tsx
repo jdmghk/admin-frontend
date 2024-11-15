@@ -67,6 +67,26 @@ export default function Page() {
     }
   }
 
+  const checkIn = async (id: string) => {
+    setPending(id);
+    try {
+      const res = await getTicketsScan(id);
+
+      if (res?.data) {
+        toast.success(`${id} Checked in sucessfully`);
+
+        setResult([]);
+      } else {
+        toast.error(res?.message ?? "something went wrong!");
+      }
+    } catch (error: unknown) {
+      console.log(error);
+      toast.error("something went wrong!");
+    } finally {
+      setPending("");
+    }
+  };
+
   return (
     <Form {...form}>
       <div
@@ -119,65 +139,41 @@ export default function Page() {
               <CardTitle>Tickets</CardTitle>
             </CardHeader>
             <CardContent className='grid gap-3'>
-              {result.map((resultItem, index) => {
-                const checkIn = async () => {
-                  setPending(resultItem.event_info[0].uniqueID);
-                  try {
-                    const res = await getTicketsScan(
-                      resultItem.event_info[0].uniqueID
-                    );
+              {result.map((resultItem) => {
+                return resultItem.event_info.map((eventInfo) => {
+                  return (
+                    <div key={resultItem._id} className='space-y-3 text-sm'>
+                      <ul className='space-y-1'>
+                        <li>
+                          <span>Name:</span> {eventInfo.name}
+                        </li>
+                        <li>
+                          <span>Email:</span> {eventInfo.email}
+                        </li>
+                        <li>
+                          <span>Ticket:</span> {eventInfo.ticket_type}
+                        </li>
+                        <li>
+                          <span>Checked In:</span>{" "}
+                          {eventInfo.check_in ? "True" : "False"}
+                        </li>
+                        <li>
+                          <span>Ticket ID:</span> {eventInfo.uniqueID}
+                        </li>
+                      </ul>
+                      {!eventInfo.check_in && (
+                        <Button onClick={() => checkIn(eventInfo.uniqueID)}>
+                          {pending === eventInfo.uniqueID && (
+                            <Loader className='animate-spin' />
+                          )}
+                          <span>Check In</span>
+                        </Button>
+                      )}
 
-                    if (res?.data) {
-                      toast.success(
-                        `${res.data.event_info[0].uniqueID} Checked in sucessfully`
-                      );
-
-                      setResult([]);
-                    } else {
-                      toast.error(res?.message ?? "something went wrong!");
-                    }
-                  } catch (error: unknown) {
-                    console.log(error);
-                    toast.error("something went wrong!");
-                  } finally {
-                    setPending("");
-                  }
-                };
-                return (
-                  <div key={resultItem._id} className='space-y-3 text-sm'>
-                    <ul className='space-y-1'>
-                      <li>
-                        <span>Name:</span> {resultItem.user.first_name}{" "}
-                        {resultItem.user.last_name}
-                      </li>
-                      <li>
-                        <span>Email:</span> {resultItem.user.email}
-                      </li>
-                      <li>
-                        <span>Ticket:</span>{" "}
-                        {resultItem.event_info[0].ticket_type}
-                      </li>
-                      <li>
-                        <span>Checked In:</span>{" "}
-                        {resultItem.event_info[0].check_in ? "True" : "False"}
-                      </li>
-                      <li>
-                        <span>Ticket ID:</span>{" "}
-                        {resultItem.event_info[0].uniqueID}
-                      </li>
-                    </ul>
-                    {!resultItem.event_info[0].check_in && (
-                      <Button onClick={checkIn}>
-                        {pending === resultItem.event_info[0].uniqueID && (
-                          <Loader className='animate-spin' />
-                        )}
-                        <span>Check In</span>
-                      </Button>
-                    )}
-
-                    {index < result.length - 1 && <Separator />}
-                  </div>
-                );
+                      <Separator />
+                    </div>
+                  );
+                });
               })}
             </CardContent>
           </Card>
