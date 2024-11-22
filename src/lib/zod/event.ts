@@ -25,7 +25,7 @@ const TicketSaleSchema = z.object({
   remaining: z.number().nullable(),
   revenue: z.number(),
   benefits: z.string().nullable().optional(),
-  sales_percentage: z.number(),
+  sales_percentage: z.string(),
 });
 
 export const TransactionSchema = z.object({
