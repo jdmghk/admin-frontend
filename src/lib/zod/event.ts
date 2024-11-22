@@ -14,6 +14,7 @@ const EventSchema = z.object({
   total_tickets: z.number(),
   total_tickets_sold: z.number(),
   available_tickets: z.number(),
+  total_checked_in: z.number(),
   ticket_sales_percentage: z.string(),
 });
 
