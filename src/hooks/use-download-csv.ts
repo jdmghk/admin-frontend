@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 type CsvOptions<T extends object> = {
   data: T[]; // Array of data objects to export
   filename?: string; // Optional filename for the CSV file
@@ -15,9 +13,6 @@ function useCsvDownload<T extends object>({
   onSuccess,
   onError,
 }: CsvOptions<T>) {
-  const [isDownloading, setIsDownloading] = useState(false);
-  const [downloadTriggered, setDownloadTriggered] = useState(false);
-
   // Convert data array to CSV string
   const convertToCsv = (): string => {
     if (!data.length) return ""; // Check if data array is empty
@@ -40,28 +35,27 @@ function useCsvDownload<T extends object>({
 
   // Function to trigger CSV download
   const downloadCsv = () => {
-    if (!data.length || downloadTriggered) return;
-
-    setIsDownloading(true);
-    setDownloadTriggered(true);
+    if (!data.length) return;
 
     try {
       const csvContent = convertToCsv();
       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
-      const url = URL.createObjectURL(blob);
 
+      // Force download attribute for better browser compatibility
+      link.download = filename;
       link.href = url;
-      link.setAttribute("download", filename);
-      link.style.display = "none";
+
+      // For Firefox compatibility
       document.body.appendChild(link);
 
+      // Trigger click synchronously
       link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
 
-      setIsDownloading(false);
-      setDownloadTriggered(false);
+      // Clean up
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
 
       if (onSuccess) onSuccess();
     } catch (error) {
@@ -71,7 +65,7 @@ function useCsvDownload<T extends object>({
     }
   };
 
-  return { downloadCsv, isDownloading };
+  return { downloadCsv };
 }
 
 export default useCsvDownload;
