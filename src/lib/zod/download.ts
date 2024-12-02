@@ -11,6 +11,7 @@ export const _TransactionSchema = z.object({
   date: z.string(),
   uniqueID: z.string(),
   ticket_type: z.string(),
+  check_in: z.boolean().optional(),
 });
 
 export const downloadTransactionsSchema = z.object({
@@ -30,6 +31,7 @@ export const _Ticket = z.object({
   trxRef: z.string(),
   uniqueID: z.string(),
   date: z.string(),
+  check_in: z.boolean().optional(),
 });
 
 export const downloadTicketsSchema = z.object({
