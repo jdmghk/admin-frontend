@@ -28,6 +28,7 @@ export function Download() {
       "trxRef",
       "date",
       "amount",
+      "check_in",
     ],
     onSuccess: () => toast.success("CSV download successful!"),
   });
