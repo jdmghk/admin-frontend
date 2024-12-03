@@ -3,11 +3,11 @@ import { z } from "zod";
 export const TicketSchema = z.object({
   id: z.string(),
   user: z.object({
-    id: z.string(),
+    id: z.string().nullable(),
     name: z.string(),
-    email: z.string().email(),
-    phone: z.number(),
-    gender: z.enum(["male", "female"]),
+    email: z.string(),
+    phone: z.number().or(z.string()),
+    gender: z.enum(["male", "female"]).nullable().optional(),
   }),
   ticket_info: z.object({
     trxRef: z.string().nullable(),
