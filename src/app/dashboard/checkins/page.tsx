@@ -145,10 +145,15 @@ export default function Page() {
                     <div key={resultItem._id} className='space-y-3 text-sm'>
                       <ul className='space-y-1'>
                         <li>
-                          <span>Name:</span> {eventInfo.name}
+                          <span>Name:</span>{" "}
+                          {eventInfo.name ??
+                            `${resultItem?.user?.first_name ?? ""} ${
+                              resultItem?.user?.last_name ?? ""
+                            }`}
                         </li>
                         <li>
-                          <span>Email:</span> {eventInfo.email}
+                          <span>Email:</span>{" "}
+                          {eventInfo.email ?? resultItem?.user?.email ?? ""}
                         </li>
                         <li>
                           <span>Ticket:</span> {eventInfo.ticket_type}

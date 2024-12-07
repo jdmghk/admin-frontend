@@ -11,8 +11,8 @@ const userSchema = z.object({
 
 const eventInfoSchema = z.object({
   id: z.string(),
-  name: z.string(),
-  email: z.string(),
+  name: z.string().optional(),
+  email: z.string().optional(),
   ticket_type: z.string(),
   uniqueID: z.string(),
   qrCode: z.string(), // Assuming base64 QR code as a string
