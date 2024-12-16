@@ -35,7 +35,14 @@ const EventSchema = z.object({
   title: z.string(),
   date: z.string(), // Format can be validated with custom regex if required
   time: z.string(), // Format can be validated with custom regex if required
-  location: z.string(),
+  location: z.string().or(
+    z.object({
+      address: z.string(),
+      city: z.string(),
+      state: z.string(),
+      country: z.string(),
+    })
+  ),
   slug: z.string(),
 });
 
