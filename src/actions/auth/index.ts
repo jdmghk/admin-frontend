@@ -3,6 +3,7 @@
 import { api } from "@/lib/api";
 import { verifyLoginSchema, verifyLoginResponseSchema } from "@/lib/zod";
 import { z } from "zod";
+
 export async function getOtp(email: string) {
   try {
     const response = await api(z.any(), {

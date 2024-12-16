@@ -223,7 +223,16 @@ export default async function Page() {
                   className='block'
                   href={res?.data?.event?.location_url ?? "#"}
                 >
-                  {res?.data?.event?.location}
+                  {typeof res.data?.event?.location === "string" ? (
+                    res.data?.event?.location
+                  ) : (
+                    <>
+                      {res.data?.event?.location?.address},{" "}
+                      {res.data?.event?.location?.city},{" "}
+                      {res.data?.event?.location?.state},{" "}
+                      {res.data?.event?.location?.country}
+                    </>
+                  )}
                 </Link>
               </div>
 

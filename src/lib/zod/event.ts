@@ -7,7 +7,14 @@ const EventSchema = z.object({
   slug: z.string(),
   duration: z.number(),
   time: z.string(),
-  location: z.string(),
+  location: z.string().or(
+    z.object({
+      address: z.string(),
+      city: z.string(),
+      state: z.string(),
+      country: z.string(),
+    })
+  ),
   location_url: z.string(),
   event_type: z.string(),
   category: z.string(),
