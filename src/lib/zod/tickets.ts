@@ -37,10 +37,10 @@ const EventSchema = z.object({
   time: z.string(), // Format can be validated with custom regex if required
   location: z.string().or(
     z.object({
-      address: z.string(),
-      city: z.string(),
-      state: z.string(),
-      country: z.string(),
+      address: z.string().optional(),
+      city: z.string().optional(),
+      state: z.string().optional(),
+      country: z.string().optional(),
     })
   ),
   slug: z.string(),
