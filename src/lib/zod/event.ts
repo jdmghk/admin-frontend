@@ -9,10 +9,10 @@ const EventSchema = z.object({
   time: z.string(),
   location: z.string().or(
     z.object({
-      address: z.string(),
-      city: z.string(),
-      state: z.string(),
-      country: z.string(),
+      address: z.string().optional(),
+      city: z.string().optional(),
+      state: z.string().optional(),
+      country: z.string().optional(),
     })
   ),
   location_url: z.string(),
