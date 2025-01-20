@@ -36,6 +36,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             data,
           });
 
+          console.log('test-error:',res.data)
+
           if (!res.data?.token) {
             // No user found, so this is their first attempt to login
             throw new Error("AccessDenied");

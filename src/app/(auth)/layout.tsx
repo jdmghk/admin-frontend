@@ -1,5 +1,5 @@
-import Image from "next/image";
-import authBg from "../../../public/e8d157d29f51fcd019e65026934c921c.png";
+// import Image from "next/image";
+// import authBg from "../../../public/e8d157d29f51fcd019e65026934c921c.png";
 import Link from "next/link";
 import { auth } from "../../../auth";
 import { redirect, RedirectType } from "next/navigation";
@@ -17,22 +17,21 @@ export default async function Layout({
 
   return (
     <section className='grid lg:grid-cols-2 h-screen'>
-      <div className='hidden lg:block relative overflow-clip'>
-        <Image
+      <div className='hidden lg:block relative overflow-clip bg-primary'>
+        {/* <Image
           alt='Towering multi-level building'
           src={authBg}
           placeholder='blur'
           quality={100}
           className='object-cover -z-10'
           fill
-        />
+        /> */}
 
         <div className='p-28 flex flex-col justify-between bg-gradient-to-b from-transparent to-[#4d44b597] text-white h-full'>
           <div className='text-center'>
             <h2 className='text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-semibold'>
-              Tickets
+              Straqa
             </h2>
-            <p className='xl:text-lg 2xl:text-xl'>By All-in</p>
           </div>
 
           <div className='text-center'>

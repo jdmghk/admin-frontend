@@ -35,6 +35,7 @@ export function Download() {
 
   return (
     <Button
+    className="bg-primary text-white"
       onClick={async function () {
         try {
           setPending(true);

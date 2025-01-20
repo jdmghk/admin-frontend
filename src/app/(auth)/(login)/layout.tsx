@@ -16,13 +16,13 @@ export default function Layout({
         <TabsList className='mx-auto w-full max-w-[358px] h-auto rounded-full font-semibold text-[#9C9AA5]'>
           <TabsTrigger
             value='create'
-            className='w-full p-4 rounded-full data-[state=active]:bg-[#4D44B5] data-[state=active]:text-white'
+            className='w-full p-4 rounded-full data-[state=active]:bg-[#020C14] data-[state=active]:text-white'
           >
             Sign up
           </TabsTrigger>
           <TabsTrigger
             value='login'
-            className='w-full p-4 rounded-full data-[state=active]:bg-[#4D44B5] data-[state=active]:text-white'
+            className='w-full p-4 rounded-full data-[state=active]:bg-[#020C14] data-[state=active]:text-white'
           >
             Sign in
           </TabsTrigger>

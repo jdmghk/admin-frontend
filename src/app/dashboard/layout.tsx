@@ -38,11 +38,11 @@ export default async function Layout({
           <div className='items-center gap-2 px-4 lg:hidden flex justify-between w-full'>
             <Link href='/dashboard'>
               <Image
-                src='/tickets-by-All-In-icon-logo-white.png'
+                src='/Logos-07.png'
                 alt=''
                 width={80}
                 height={80}
-                className='object-contain object-center size-8'
+                className='object-contain object-center size-12'
               />
             </Link>
 
