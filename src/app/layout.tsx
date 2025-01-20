@@ -23,8 +23,8 @@ const plusJakartaSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Tickets by All-in",
-  description: "Ticket experience made easy",
+  title: "Straqa Admin",
+  description: "Straqa Admin",
   keywords,
   authors: [{ name: "All-in Technologies", url: "lifewithallin.com" }],
   creator: "All-in Technologies",

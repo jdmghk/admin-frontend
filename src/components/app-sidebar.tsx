@@ -119,11 +119,11 @@ export function AppSidebar({
       <SidebarHeader>
         <div className='p-2'>
           <Image
-            src='/tickets-by-All-In-icon-logo-white.png'
+            src='/Logos-07.svg'
             alt=''
-            width={80}
-            height={80}
-            className='object-contain object-center size-10'
+            width={100}
+            height={100}
+            className='object-contain object-center size-14'
           />
         </div>
 

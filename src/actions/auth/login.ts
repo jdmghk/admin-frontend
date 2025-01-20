@@ -28,7 +28,7 @@ export async function client_login(
     await signIn("credentials", { email, otp });
   } catch (e) {
     errored = true;
-
+    console.log('login error', {e})
     if (e instanceof AuthError) {
       switch (e.type) {
         case "AccessDenied":
