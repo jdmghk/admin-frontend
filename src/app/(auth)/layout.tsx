@@ -1,4 +1,4 @@
-// import Image from "next/image";
+import Image from "next/image";
 // import authBg from "../../../public/e8d157d29f51fcd019e65026934c921c.png";
 import Link from "next/link";
 import { auth } from "../../../auth";
@@ -28,10 +28,17 @@ export default async function Layout({
         /> */}
 
         <div className='p-28 flex flex-col justify-between bg-gradient-to-b from-transparent to-[#4d44b597] text-white h-full'>
-          <div className='text-center'>
-            <h2 className='text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-semibold'>
+          <div className='text-center flex justify-center items-center w-full'>
+            {/* <h2 className='text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-semibold'>
               Straqa
-            </h2>
+            </h2> */}
+            <Image
+              src='/Logos-07.svg'
+              height={200}
+              width={200}
+              alt="Straqa Logo"
+              className="size-40"
+            />
           </div>
 
           <div className='text-center'>
